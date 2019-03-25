@@ -1,41 +1,33 @@
-﻿@*
-
-*@
-@{
+﻿
+@if (ViewBag.cart != null)
+{
+    foreach (ShoppingCartItem shoppingCartItem in ViewBag.cart)
+    {
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-md-offset-3 col-sm-offset-3">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <span class="badge">@shoppingCartItem.Quantity</span>
+                        <strong>@shoppingCartItem.Product.Title}</strong>
+                        <span class="label label-success ">@shoppingCartItem.Product.Price €</span>
+                        <div class="float-right">
+                            <a asp-controller="ShoppingCart" asp-action="Buy" asp-route-id="@shoppingCartItem.Product.Id"><button class="btn btn-danger btn-xs"><i class="fas fa-cart-arrow-down"></i><span class="caret"></span></button></a>
+                            <a href=""><button class="btn btn-success btn-xs"><i class="fas fa-cart-plus"></i><span class="caret"></span></button></a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    }
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-md-offset-3 col-sm-offset-3">
+            <strong>Total Price:  €</strong>
+        </div>
+    </div>
 }
-
-
-@ViewBag.cart
-<div class="row">
-    <div class="col-sm-12 col-md-12 col-md-offset-3 col-sm-offset-3">
-        <ul class="list-group">
-
-
-
-
-            <li class="list-group-item">
-                <span class="badge">{{ $product['qty'] }}</span>
-                <strong>{{ $product['item']['title'] }}</strong>
-                <span class="label label-success ">{{ $product['price'] }} €</span>
-                <div class="float-right">
-
-                    <a href="{{route('product.reduceByOne', ['id'=> $product['item']['id']])}}"><button class="btn btn-danger btn-xs"><i class="fas fa-cart-arrow-down"></i><span class="caret"></span></button></a>
-                    <a href="{{route('product.addToCart', ['id'=> $product['item']['id']])}}"><button class="btn btn-success btn-xs"><i class="fas fa-cart-plus"></i><span class="caret"></span></button></a>
-
-                </div>
-
-            </li>
-
-
-        </ul>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-12 col-md-12 col-md-offset-3 col-sm-offset-3">
-        <strong>Total Price: {{ $totalPrice }} €</strong>
-    </div>
-</div>
-
-    er zit niets in je mandje
+else
+{
+    <h1>er zit niets in je mandje</h1>
+}
 
 

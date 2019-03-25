@@ -44,10 +44,8 @@
 </head>
 <body>
 
-
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" asp-action="Index">Erik's Webshop</a>
-
+        <a class="navbar-brand" asp-controller="Home" asp-action="Index">Erik's Webshop</a>
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
@@ -55,16 +53,14 @@
             <span class="icon-bar"></span>
         </button>
 
-
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <!-- WinkelMandje enkel tonen indien niet ingelogd of ingelogd als geen admin-->
 
-
-                @if (SignInManager.UserManager.SupportsUserRole.ToString() != "Admin")
+                @if (SignInManager.IsSignedIn(User) && SignInManager.UserManager.SupportsUserRole.ToString() != "Admin")
                 {
                     <li class="nav-item active">
-                        <a class="nav-link" href="#;">
+                        <a class="nav-link" asp-controller="ShoppingCart" asp-action="Index">
                             <i class="fas fa-shopping-cart"></i> Shopping cart
                             <span class="badge"> </span>
                             <span class="sr-only">(current)</span>
@@ -85,7 +81,7 @@
                     </div>
                 </li>
             </ul>
-            @if (SignInManager.IsSignedIn(User) && ViewBag.IsAdmin)
+            @if (SignInManager.IsSignedIn(User) && SignInManager.UserManager.SupportsUserRole.ToString() != "Admin")
             {<a class="nav-item dropdown" href="#"> <i class="fas fa-tools"></i> Administrator Tools </a>}
 
         </div>
@@ -94,6 +90,7 @@
 
 
     @*<partial name="_CookieConsentPartial" />*@
+    </br>
     <div class="container body-content">
         @RenderBody()
         <hr />
