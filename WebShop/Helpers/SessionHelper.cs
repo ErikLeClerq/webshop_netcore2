@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,7 +13,8 @@ namespace WebShop.Helpers
     {
         public static void SetObjectAsJson(this ISession session, string key, object value)
         {
-            session.SetString(key, JsonConvert.SerializeObject(value));
+            var  a = JsonConvert.SerializeObject(value);
+            session.SetString(key, a);
         }
 
         public static T GetObjectFromJson<T>(this ISession session, string key)

@@ -20,6 +20,8 @@
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-grid.css" />
         <link href="~/lib/bootstrap/dist/css/bootstrap-grid.css" rel="stylesheet" />
         <script src="~/lib/popper.js/dist/umd/popper.js"></script>
+        <script src="~/lib/vue/dist/vue.js"></script>
+
 
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
@@ -35,6 +37,8 @@
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-grid.css" />
         <link href="~/lib/bootstrap/dist/css/bootstrap-grid.css" rel="stylesheet" />
         <script src="~/lib/popper.js/dist/umd/popper.js"></script>
+        <script src="~/lib/vue/dist/vue.js"></script>
+
 
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
@@ -43,7 +47,6 @@
 
 </head>
 <body>
-
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" asp-controller="Home" asp-action="Index">Erik's Webshop</a>
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -57,7 +60,7 @@
             <ul class="navbar-nav">
                 <!-- WinkelMandje enkel tonen indien niet ingelogd of ingelogd als geen admin-->
 
-                @if (SignInManager.IsSignedIn(User) && SignInManager.UserManager.SupportsUserRole.ToString() != "Admin")
+                @if (!SignInManager.IsSignedIn(User) || SignInManager.IsSignedIn(User) && SignInManager.UserManager.SupportsUserRole.ToString() != "Admin")
                 {
                     <li class="nav-item active">
                         <a class="nav-link" asp-controller="ShoppingCart" asp-action="Index">

@@ -8,11 +8,20 @@
                 <ul class="list-group">
                     <li class="list-group-item">
                         <span class="badge">@shoppingCartItem.Quantity</span>
-                        <strong>@shoppingCartItem.Product.Title}</strong>
-                        <span class="label label-success ">@shoppingCartItem.Product.Price €</span>
+                        <strong>@shoppingCartItem.Product.Title</strong>
+                        <span class="label label-success ">@shoppingCartItem.Price €</span>
                         <div class="float-right">
-                            <a asp-controller="ShoppingCart" asp-action="Buy" asp-route-id="@shoppingCartItem.Product.Id"><button class="btn btn-danger btn-xs"><i class="fas fa-cart-arrow-down"></i><span class="caret"></span></button></a>
-                            <a href=""><button class="btn btn-success btn-xs"><i class="fas fa-cart-plus"></i><span class="caret"></span></button></a>
+
+                            <a asp-controller="ShoppingCart" asp-action="Sell" asp-route-id="@shoppingCartItem.Product.Id">
+                                <div class="btn btn-danger btn-xs">
+                                    <i class="fas fa-cart-plus"></i>
+                                </div><span class="caret"></span>
+                            </a>
+
+                            <a asp-controller="ShoppingCart" asp-action="Buy" asp-route-id="@shoppingCartItem.Product.Id">
+                                    <div class="btn btn-success btn-xs">
+                                            <i class="fas fa-cart-plus"></i>
+                                    </div><span class="caret"></span></a>
                         </div>
                     </li>
                 </ul>

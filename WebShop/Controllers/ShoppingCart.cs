@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebShop.Models;
 using System.Web;
-using WebShop.Helpers;using Microsoft.AspNetCore.Http;
+using WebShop.Helpers;
+using Microsoft.AspNetCore.Http;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,7 +18,7 @@ namespace WebShop.Controllers
         public IActionResult Index()
         {
           
-        var cart = SessionHelper.GetObjectFromJson<List<ShoppingCartItem>>(HttpContext.Session, "cart");
+        var cart = HttpContext.Session.GetObjectFromJson<List<ShoppingCartItem>>("cart");
         ViewBag.cart = cart;
         if (ViewBag.cart != null)
         {
@@ -40,7 +41,7 @@ namespace WebShop.Controllers
             if (SessionHelper.GetObjectFromJson<List<ShoppingCartItem>>(HttpContext.Session, "cart") == null)
             {
                 List<ShoppingCartItem> cart = new List<ShoppingCartItem>();
-                cart.Add(new ShoppingCartItem { Product =  context.GetProductFromId(id), Quantity = 1 });
+                cart.Add(new ShoppingCartItem { Product =  context.GetProductFromId(id), Quantity = 1, Price = context.GetProductFromId(id).Price });
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             }
             else
@@ -50,6 +51,7 @@ namespace WebShop.Controllers
                 if (index != -1)
                 {
                     cart[index].Quantity++;
+                    cart[index].Price += cart[index].Price;
                 }
                 else
                 {
@@ -59,18 +61,49 @@ namespace WebShop.Controllers
             }
             return RedirectToAction("Index");
         }
-     private int isExist(string id)
+
+        public IActionResult Sell(string id)
+        {
+            WebShopContext context = HttpContext.RequestServices.GetService(typeof(WebShopContext)) as WebShopContext;
+
+            if (SessionHelper.GetObjectFromJson<List<ShoppingCartItem>>(HttpContext.Session, "cart") != null)
+            {
+                List<ShoppingCartItem> cart = SessionHelper.GetObjectFromJson<List<ShoppingCartItem>>(HttpContext.Session, "cart");
+                int index = isExist(id);
+                if (index != -1)
+                {
+                    if (cart[index].Quantity == 1 )
+                    {
+                        cart.Remove(cart[index]);
+                    }
+                    else { 
+                    cart[index].Quantity--;
+                    cart[index].Price -= cart[index].Price;
+                    }
+                }
+
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+            }
+       
+            return RedirectToAction("Index");
+        }
+
+
+        private int isExist(string id)
         {
             List<ShoppingCartItem> cart = SessionHelper.GetObjectFromJson<List<ShoppingCartItem>>(HttpContext.Session, "cart");
-            for (int i = 0; i < cart.Count; i++)
+            foreach(ShoppingCartItem shoppingCart in cart)
             {
-                if (cart[i].Product.Id.Equals(id))
-                {
-                    return i;
-                }
+                    if(shoppingCart.Product.Id.ToString() == id)
+                    {
+                    return 0;
+                    }
+
             }
             return -1;
         }
+           
+   }
 
-    }
+    
 }
