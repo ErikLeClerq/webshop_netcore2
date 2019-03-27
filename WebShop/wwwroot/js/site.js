@@ -4,6 +4,6 @@ import Vue from 'vue'
 import BootstrapVue from 'bootstrap-vue'
 Vue.use(BootstrapVue)
 
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-// Write your JavaScript code.
+import '~/lib/bootstrap/dist/css/bootstrap.css'
+import '~/lib/bootstrap-vue/dist/bootstrap-vue.css'
+import '~/lib/bootstrap/dist/css/bootstrap.min.css'

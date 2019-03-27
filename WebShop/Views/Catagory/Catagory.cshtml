@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+
+}
+<div>
+    <div class="jumbotron jumbotron-fluid" style="background-color: #343a40">
+        <div class="container">
+            <h1 class="display-4" style="color: white;">@ViewBag.catagory.Name</h1>
+            <p class="lead" style="color: white;">These are all our products in the @ViewBag.catagory.Name catagory.</p>
+        </div>
+    </div>
+
+    <partial name="_ProductInsert" />
+</div>
+

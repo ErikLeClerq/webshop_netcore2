@@ -13,6 +13,8 @@ namespace WebShop.Models
         public string ImagePath { get; set; }
         public decimal Price { get; set; }
         public int StockAmount { get; set; }
+        public int CatagoryId { get; set; }
+
 
     }
 }
